@@ -637,6 +637,112 @@
         }
 
         /* ────────────────────────────────────────────────────
+           🎞️ SECCIÓN DE RECUERDOS: FLIP CARDS
+           ──────────────────────────────────────────────────── */
+        .section--memories {
+            background: linear-gradient(135deg, #fdf5e6 0%, #fce8d8 100%);
+        }
+
+        .memories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            width: 100%;
+            max-width: 900px;
+            margin: var(--spacing-lg) auto;
+            perspective: 1000px;
+        }
+
+        .memory-card {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .memory-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .memory-card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            background: white;
+        }
+
+        .memory-card-front {
+            background: white;
+            overflow: hidden;
+        }
+
+        .memory-card-front img,
+        .memory-card-front video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .memory-card-front .play-icon {
+            position: absolute;
+            font-size: 3.5rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+        }
+
+        .memory-card-front:hover .play-icon {
+            opacity: 1;
+        }
+
+        .memory-card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .memory-card-back-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            word-wrap: break-word;
+        }
+
+        .memory-card-back-text {
+            font-size: 0.95rem;
+            line-height: var(--line-height-relaxed);
+            word-wrap: break-word;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .memory-card-back-date {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* ────────────────────────────────────────────────────
            💕 SECCIÓN 5: LO QUE SIENTO POR TI
            ──────────────────────────────────────────────────── */
         .section--love {
@@ -703,7 +809,7 @@
         }
 
         /* ────────────────────────────────────────────────────
-           🎁 SECCIÓN 6: TU REGALO
+           🎁 SECCIÓN 7: TU REGALO
            ──────────────────────────────────────────────────── */
         .section--gift {
             background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-light) 50%, var(--color-secondary) 100%);
@@ -1003,7 +1109,99 @@
             </button>
         </section>
 
-        <!-- 💕 SECCIÓN 5: LO QUE SIENTO POR TI -->
+        <!-- 🎞️ SECCIÓN 5: RECUERDOS -->
+        <section class="section section--memories" id="section-memories">
+            <h1 class="section__title">Nuestros Recuerdos</h1>
+            <p class="section__subtitle">Haz clic en las cartas para voltearlas y ver nuestros momentos especiales</p>
+            
+            <div class="memories-container">
+                <!-- 🎞️ EDITAR: Agregar/modificar recuerdos aquí -->
+                
+                <!-- Recuerdo 1 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <img src="https://via.placeholder.com/250x280?text=Nuestro+Primer+Viaje" alt="Primer viaje">
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Nuestro Primer Viaje</div>
+                        <p class="memory-card-back-text">Ese viaje fue mágico, cada momento fue especial contigo. Nunca olvidaré esa noche bajo las estrellas.</p>
+                        <div class="memory-card-back-date">Junio 2023</div>
+                    </div>
+                </div>
+                
+                <!-- Recuerdo 2 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <img src="https://via.placeholder.com/250x280?text=Café+Favorito" alt="Café favorito">
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Café Especial</div>
+                        <p class="memory-card-back-text">Esos cafés en nuestra esquina favorita, conversaciones infinitas solo tú y yo. Esos son los momentos que atesoro.</p>
+                        <div class="memory-card-back-date">Octubre 2023</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 3 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <img src="https://via.placeholder.com/250x280?text=Puesta+de+Sol" alt="Puesta de sol">
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Nuestro Atardecer</div>
+                        <p class="memory-card-back-text">Viendo la puesta de sol contigo, ese momento fue perfecto. Desearía poder congelarlo en el tiempo para siempre.</p>
+                        <div class="memory-card-back-date">Septiembre 2023</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 4 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <img src="https://via.placeholder.com/250x280?text=Videollamada" alt="Videollamada especial">
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Nuestras Videollamadas</div>
+                        <p class="memory-card-back-text">La distancia desaparece cuando veo tu sonrisa en la pantalla. Esas videollamadas son mi favorito del día.</p>
+                        <div class="memory-card-back-date">Constantemente</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 5 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <img src="https://via.placeholder.com/250x280?text=Música+Juntos" alt="Música juntos">
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Nuestra Banda Sonora</div>
+                        <p class="memory-card-back-text">Cada canción que escuchamos juntos se convierte en nuestro recuerdo. La música es el lenguaje de nuestro amor.</p>
+                        <div class="memory-card-back-date">Diciembre 2023</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 6 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <img src="https://via.placeholder.com/250x280?text=Momentos+Especiales" alt="Momentos especiales">
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Cada Día Contigo</div>
+                        <p class="memory-card-back-text">Cada momento a tu lado es un recuerdo que guardaré por siempre. Eres el mejor regalo que la vida me dio.</p>
+                        <div class="memory-card-back-date">Siempre</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn--secondary" id="memoriesNextBtn">
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- 💕 SECCIÓN 6: LO QUE SIENTO POR TI -->
         <section class="section section--love" id="section-love">
             <div class="love-letter">
                 <h1 class="love-letter__title">Para Ti</h1>
@@ -1028,7 +1226,7 @@
             </button>
         </section>
 
-        <!-- 🎁 SECCIÓN 6: TU REGALO -->
+        <!-- 🎁 SECCIÓN 7: TU REGALO -->
         <section class="section section--gift" id="section-gift">
             <div class="gift__box" id="giftBox">🎁</div>
             
@@ -1301,8 +1499,12 @@
             progressMgr.scrollToSection(4);
         });
 
-        document.getElementById('loveNextBtn').addEventListener('click', () => {
+        document.getElementById('memoriesNextBtn').addEventListener('click', () => {
             progressMgr.scrollToSection(5);
+        });
+
+        document.getElementById('loveNextBtn').addEventListener('click', () => {
+            progressMgr.scrollToSection(6);
         });
 
         document.getElementById('openGiftBtn').addEventListener('click', () => {
