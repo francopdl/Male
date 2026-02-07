@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b9d">
+    <title>Nuestro Viaje - San Valentín 💕</title>
+    <style>
+        /* ────────────────────────────────────────────────────
+           🎨 SISTEMA DE DISEÑO - VARIABLES GLOBALES
+           ──────────────────────────────────────────────────── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* 🎨 PALETA DE COLORES */
+            --color-primary: #ff6b9d;
+            --color-primary-dark: #ff85b3;
+            --color-primary-light: #ffb3d9;
+            --color-secondary: #ffd700;
+            --color-success: #27ae60;
+            --color-error: #e74c3c;
+            --color-dark: #2d3436;
+            --color-light: #fff5f7;
+            --color-gray: #636e72;
+            --color-gray-light: #b2bec3;
+
+            /* ⏱️ TRANSICIONES */
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s ease;
+            --transition-slow: 0.6s ease;
+
+            /* 📏 ESPACIADO */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+
+            /* 🔤 TIPOGRAFÍA */
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            --font-size-base: 1rem;
+            --font-size-sm: 0.875rem;
+            --font-size-lg: 1.25rem;
+            --line-height-tight: 1.4;
+            --line-height-normal: 1.6;
+            --line-height-relaxed: 1.8;
+
+            /* 🎭 SOMBRAS */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.16);
+
+            /* 🏠 LAYOUTS */
+            --max-content-width: 600px;
+            --mobile-padding: 1.25rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: var(--color-dark);
+            line-height: var(--line-height-normal);
+            overflow-x: hidden;
+        }
+
+        /* ────────────────────────────────────────────────────
+           ⏳ PANTALLA DE CARGA
+           ──────────────────────────────────────────────────── */
+        .app__loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            z-index: 9999;
+            animation: loader__fadeOut var(--transition-slow) ease-in-out forwards;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes loader__fadeOut {
+            from { opacity: 1; visibility: visible; }
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        .app__loader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .app__loader-icon {
+            font-size: 4rem;
+            animation: loader__pulse 1s ease-in-out infinite;
+            margin-bottom: var(--spacing-md);
+        }
+
+        @keyframes loader__pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .app__loader-text {
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ────────────────────────────────────────────────────
+           🎯 CONTENEDOR PRINCIPAL
+           ──────────────────────────────────────────────────── */
+        .app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ────────────────────────────────────────────────────
+           📄 SECCIONES - Sistema de scroll vertical
+           ──────────────────────────────────────────────────── */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-lg) var(--mobile-padding);
+            scroll-margin-top: 0;
+        }
+
+        @media (min-width: 768px) {
+            .section {
+                padding: var(--spacing-xl) var(--mobile-padding);
+            }
+        }
+
+        /* ────────────────────────────────────────────────────
+           🏠 SECCIÓN 1: HERO/INICIO
+           ──────────────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.95) 0%, rgba(255, 215, 0, 0.95) 100%);
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero__content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .hero__title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            animation: hero__slideInDown var(--transition-slow) ease-out;
+            letter-spacing: 1px;
+        }
+
+        .hero__subtitle {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-weight: 300;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            animation: hero__slideInUp var(--transition-slow) ease-out 0.15s backwards;
+        }
+
+        @keyframes hero__slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes hero__slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero__controls {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            animation: hero__slideInUp var(--transition-slow) ease-out 0.3s backwards;
+        }
+
+        /* ────────────────────────────────────────────────────
+           🎵 CONTROL DE MÚSICA
+           ──────────────────────────────────────────────────── */
+        .music-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 3.125rem;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            backdrop-filter: blur(8px);
+            max-width: fit-content;
+            margin: 0 auto;
+        }
+
+        .music-btn:hover,
+        .music-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .music-btn--playing {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ────────────────────────────────────────────────────
+           🔘 BOTONES GENERALES
+           ──────────────────────────────────────────────────── */
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: 3.125rem;
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn--primary {
+            background: white;
+            color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+            max-width: fit-content;
+            margin: 0 auto;
+        }
+
+        .btn--primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn--primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn--secondary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+            margin-top: var(--spacing-lg);
+        }
+
+        .btn--secondary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.5);
+        }
+
+        .btn--secondary:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        /* ────────────────────────────────────────────────────
+           🏷️ TÍTULOS Y HEADINGS
+           ──────────────────────────────────────────────────── */
+        .section__title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--color-primary);
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            letter-spacing: 0.3px;
+        }
+
+        /* ────────────────────────────────────────────────────
+           🖼️ IMÁGENES Y GALERÍAS
+           ──────────────────────────────────────────────────── */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            width: 100%;
+            max-width: var(--max-content-width);
+            margin: var(--spacing-lg) auto;
+        }
+
+        .gallery--2col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .gallery--4col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .gallery__item {
+            aspect-ratio: 1;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+
+        .gallery__item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery__placeholder {
+            color: var(--color-gray-light);
+            font-size: 2.5rem;
+        }
+
+        /* ────────────────────────────────────────────────────
+           📝 TEXTOS Y PÁRRAFOS
+           ──────────────────────────────────────────────────── */
+        .text-block {
+            max-width: var(--max-content-width);
+            margin: var(--spacing-lg) auto;
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 1rem;
+            border-left: 4px solid var(--color-primary);
+            text-align: center;
+            line-height: var(--line-height-relaxed);
+        }
+
+        .text-block__primary {
+            font-size: var(--font-size-lg);
+            font-style: italic;
+            color: var(--color-dark);
+        }
+
+        /* ────────────────────────────────────────────────────
+           ❓ QUIZ/PREGUNTAS
+           ──────────────────────────────────────────────────── */
+        .quiz {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 1.25rem;
+            max-width: var(--max-content-width);
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .quiz__question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .quiz__options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .quiz__option {
+            padding: var(--spacing-md);
+            background: var(--color-light);
+            border: 2px solid transparent;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--color-dark);
+            text-align: center;
+            user-select: none;
+        }
+
+        .quiz__option:hover {
+            border-color: var(--color-primary);
+            background: white;
+            transform: translateX(4px);
+        }
+
+        .quiz__option--active {
+            border-color: var(--color-primary);
+            background: rgba(255, 107, 157, 0.15);
+        }
+
+        .quiz__option--correct {
+            border-color: var(--color-success);
+            background: #d5f4e6;
+            color: var(--color-success);
+        }
+
+        .quiz__option--incorrect {
+            border-color: var(--color-error);
+            background: #fadbd8;
+            color: var(--color-error);
+        }
+
+        .quiz__option:disabled {
+            cursor: not-allowed;
+        }
+
+        .quiz__feedback {
+            text-align: center;
+            margin-top: var(--spacing-md);
+            font-weight: 600;
+            font-size: 1.05rem;
+            min-height: 1.5rem;
+            transition: all var(--transition-fast);
+        }
+
+        .quiz__feedback--correct {
+            color: var(--color-success);
+        }
+
+        .quiz__feedback--incorrect {
+            color: var(--color-error);
+        }
+
+        /* ────────────────────────────────────────────────────
+           💌 SECCIÓN 2: CÓMO EMPEZÓ TODO
+           ──────────────────────────────────────────────────── */
+        .section--story {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        /* ────────────────────────────────────────────────────
+           🌟 SECCIÓN 3: NUESTROS MOMENTOS
+           ──────────────────────────────────────────────────── */
+        .section--moments {
+            background: linear-gradient(135deg, #fceee8 0%, #f5e6d3 100%);
+        }
+
+        .game-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .game-option {
+            padding: var(--spacing-md);
+            background: var(--color-light);
+            border: 2px solid transparent;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--color-dark);
+            text-align: center;
+        }
+
+        .game-option:hover {
+            border-color: var(--color-primary);
+            background: white;
+            transform: translateX(4px);
+        }
+
+        .game-option--selected {
+            background: rgba(255, 107, 157, 0.2);
+            border-color: var(--color-primary);
+        }
+
+        .game-option:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ────────────────────────────────────────────────────
+           ✨ SECCIÓN 4: NUESTRAS FRASES
+           ──────────────────────────────────────────────────── */
+        .section--quotes {
+            background: linear-gradient(135deg, #fef9f9 0%, #fef3e6 100%);
+        }
+
+        .quotes-list {
+            max-width: var(--max-content-width);
+            width: 100%;
+            margin: var(--spacing-lg) auto;
+        }
+
+        .quote-card {
+            background: white;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            border-radius: 1rem;
+            border-left: 4px solid var(--color-primary);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-fast);
+        }
+
+        .quote-card:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .quote-card__text {
+            font-size: 1.05rem;
+            color: var(--color-dark);
+            font-style: italic;
+            line-height: var(--line-height-relaxed);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .quote-card__author {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray);
+            text-align: right;
+        }
+
+        .complete-quote {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 1.25rem;
+            max-width: var(--max-content-width);
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .complete-quote__text {
+            font-size: 1.2rem;
+            color: var(--color-dark);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            line-height: var(--line-height-relaxed);
+            font-style: italic;
+            min-height: 5rem;
+        }
+
+        .complete-quote__blank {
+            color: var(--color-primary);
+            font-weight: 700;
+            border-bottom: 2px dotted var(--color-primary);
+            padding: 0 var(--spacing-xs);
+        }
+
+        .complete-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .complete-option {
+            padding: var(--spacing-md);
+            background: var(--color-light);
+            border: 2px solid transparent;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--color-dark);
+            text-align: center;
+        }
+
+        .complete-option:hover {
+            border-color: var(--color-primary);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .complete-option--correct {
+            background: #d5f4e6;
+            border-color: var(--color-success);
+            color: var(--color-success);
+        }
+
+        .complete-option:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ────────────────────────────────────────────────────
+           💕 SECCIÓN 5: LO QUE SIENTO POR TI
+           ──────────────────────────────────────────────────── */
+        .section--love {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-secondary) 100%);
+        }
+
+        .love-letter {
+            background: white;
+            padding: clamp(1.5rem, 5vw, 2.5rem);
+            border-radius: 1.25rem;
+            max-width: var(--max-content-width);
+            width: 100%;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+            position: relative;
+            animation: love-letter__fadeInScale var(--transition-slow) ease-out;
+        }
+
+        @keyframes love-letter__fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .love-letter::before {
+            content: "💌";
+            position: absolute;
+            top: -1.875rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            animation: love-letter__float 3s ease-in-out infinite;
+        }
+
+        @keyframes love-letter__float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-1.25rem); }
+        }
+
+        .love-letter__title {
+            font-size: 1.875rem;
+            color: var(--color-primary);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            font-weight: 700;
+        }
+
+        .love-letter__content {
+            font-size: 1.05rem;
+            line-height: 2;
+            color: var(--color-dark);
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        .love-letter__content p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .love-letter__closing {
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            font-weight: 600;
+            text-align: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        /* ────────────────────────────────────────────────────
+           🎁 SECCIÓN 6: TU REGALO
+           ──────────────────────────────────────────────────── */
+        .section--gift {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-light) 50%, var(--color-secondary) 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .gift__box {
+            font-size: clamp(4rem, 12vw, 8rem);
+            animation: gift__bounce 1s ease-in-out infinite;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        @keyframes gift__bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-1.25rem) rotate(-3deg); }
+            75% { transform: translateY(-1.25rem) rotate(3deg); }
+        }
+
+        .gift__message {
+            max-width: var(--max-content-width);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .gift__title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .gift__text {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            line-height: var(--line-height-relaxed);
+            margin-bottom: var(--spacing-lg);
+            font-weight: 300;
+        }
+
+        .gift__final {
+            font-size: 1.15rem;
+            font-weight: 600;
+            animation: gift__pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes gift__pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ────────────────────────────────────────────────────
+           🎊 EFECTOS ANIMADOS
+           ──────────────────────────────────────────────────── */
+        .confetti {
+            position: fixed;
+            width: 0.625rem;
+            height: 0.625rem;
+            background: var(--color-primary);
+            border-radius: 50%;
+            animation: confetti__fall 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes confetti__fall {
+            to {
+                transform: translateY(100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .heart-particle {
+            position: fixed;
+            font-size: 2rem;
+            animation: heart__fall 3s ease-out forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes heart__fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* ────────────────────────────────────────────────────
+           📊 BARRA DE PROGRESO
+           ──────────────────────────────────────────────────── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            transition: width var(--transition-smooth);
+            z-index: 9998;
+        }
+
+        /* ────────────────────────────────────────────────────
+           📱 RESPONSIVE - Tablets
+           ──────────────────────────────────────────────────── */
+        @media (min-width: 768px) {
+            .section {
+                padding: var(--spacing-xl) var(--mobile-padding);
+            }
+
+            .gallery--4col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ────────────────────────────────────────────────────
+           📱 RESPONSIVE - Mobile pequeño
+           ──────────────────────────────────────────────────── */
+        @media (max-width: 480px) {
+            :root {
+                --spacing-lg: 1.5rem;
+                --spacing-xl: 2rem;
+                --mobile-padding: 1rem;
+            }
+
+            .hero__title {
+                font-size: 2rem;
+            }
+
+            .section__title {
+                font-size: 1.5rem;
+            }
+
+            .quiz,
+            .complete-quote {
+                padding: var(--spacing-md);
+            }
+
+            .love-letter {
+                padding: var(--spacing-md);
+            }
+
+            .love-letter__content {
+                font-size: 0.95rem;
+            }
+
+            .gift__title {
+                font-size: 1.8rem;
+            }
+
+            .gift__text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ⏳ PANTALLA DE CARGA -->
+    <div class="app__loader" id="appLoader">
+        <div class="app__loader-content">
+            <div class="app__loader-icon">❤️</div>
+            <p class="app__loader-text">Cargando nuestro viaje...</p>
+        </div>
+    </div>
+
+    <!-- 📊 BARRA DE PROGRESO -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- 🎯 APLICACIÓN PRINCIPAL -->
+    <div class="app" id="app">
+        <!-- 🏠 SECCIÓN 1: PANTALLA INICIAL/HERO -->
+        <section class="section hero" id="section-hero">
+            <div class="hero__content">
+                <h1 class="hero__title">💕 Nuestro Viaje 💕</h1>
+                
+                <!-- ⚙️ EDITAR: Cambiar subtítulo -->
+                <h2 class="hero__subtitle">Un viaje por nuestros mejores momentos juntos</h2>
+
+                <div class="hero__controls">
+                    <!-- ⚙️ EDITAR: Cambiar URL de música (reemplazar 'tu-cancion.mp3') -->
+                    <button class="music-btn" id="musicBtn" data-audio="tu-cancion.mp3">
+                        🎵 Reproducir música
+                    </button>
+                    <button class="btn btn--primary" id="heroStartBtn">
+                        ✨ Empezar el viaje ✨
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 💌 SECCIÓN 2: CÓMO EMPEZÓ TODO -->
+        <section class="section section--story" id="section-story">
+            <h1 class="section__title">Cómo Empezó Todo</h1>
+
+            <!-- 🖼️ GALERÍA: 2 imágenes -->
+            <div class="gallery gallery--2col" id="storyGallery">
+                <!-- ⚙️ EDITAR: Cambiar URLs de imágenes -->
+                <div class="gallery__item">
+                    <img src="imagen1.jpg" alt="Primer momento" loading="lazy">
+                </div>
+                <div class="gallery__item">
+                    <img src="imagen2.jpg" alt="Segundo momento" loading="lazy">
+                </div>
+            </div>
+
+            <!-- ⚙️ EDITAR: Cambiar texto de la historia -->
+            <div class="text-block text-block__primary">
+                Recuerdo claramente el día que nos conocimos. Fue como si el universo conspirara para que nuestros caminos se cruzaran. Desde ese primer momento, supe que eras especial. Tu sonrisa iluminó mi vida de una forma que nunca imaginé. Cada segundo a tu lado se siente como un regalo precioso. Aunque estemos a distancia, la conexión que compartimos es más fuerte que cualquier kilómetro que nos separe.
+            </div>
+
+            <!-- ❓ QUIZ INTERACTIVO -->
+            <div class="quiz" data-quiz="story">
+                <!-- ⚙️ EDITAR: Cambiar pregunta -->
+                <div class="quiz__question">¿Cuál fue nuestro primer tema de conversación?</div>
+                <div class="quiz__options">
+                    <!-- ⚙️ EDITAR: Cambiar opciones (el índice de la primera opción correcta es 0, segunda es 1, tercera es 2) -->
+                    <button class="quiz__option" data-index="0">Sobre viajes y aventuras</button>
+                    <button class="quiz__option" data-index="1">Sobre nuestros sueños</button>
+                    <button class="quiz__option" data-index="2">Sobre películas favoritas</button>
+                </div>
+                <div class="quiz__feedback"></div>
+            </div>
+            <!-- ⚙️ EDITAR: Cambiar índice de respuesta correcta (el quiz usa data-correct) -->
+            <input type="hidden" id="story-quiz-correct" value="1">
+
+            <button class="btn btn--secondary" id="storyNextBtn" disabled>
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- 🌟 SECCIÓN 3: NUESTROS MOMENTOS -->
+        <section class="section section--moments" id="section-moments">
+            <h1 class="section__title">Nuestros Momentos</h1>
+
+            <!-- 🖼️ GALERÍA: 4 imágenes -->
+            <div class="gallery gallery--4col" id="momentsGallery">
+                <!-- ⚙️ EDITAR: Cambiar URLs de imágenes -->
+                <div class="gallery__item">
+                    <img src="imagen3.jpg" alt="Momento 1" loading="lazy">
+                </div>
+                <div class="gallery__item">
+                    <img src="imagen4.jpg" alt="Momento 2" loading="lazy">
+                </div>
+                <div class="gallery__item">
+                    <img src="imagen5.jpg" alt="Momento 3" loading="lazy">
+                </div>
+                <div class="gallery__item">
+                    <img src="imagen6.jpg" alt="Momento 4" loading="lazy">
+                </div>
+            </div>
+
+            <!-- ⚙️ EDITAR: Cambiar descripción -->
+            <div class="text-block text-block__primary">
+                Cada momento contigo es un tesoro que guardo en mi corazón. Las risas compartidas, los silencios cómodos, los abrazos virtuales... todos esos detalles pequeños son lo que hace especial nuestra historia. Aunque podamos estar lejos, tu presencia siempre está conmigo.
+            </div>
+
+            <!-- 🎮 JUEGO: ADIVINA EL MOMENTO -->
+            <div class="quiz" data-quiz="moments">
+                <!-- ⚙️ EDITAR: Cambiar pregunta y opciones -->
+                <div class="quiz__question">¿Cuál fue nuestro momento favorito?</div>
+                <div class="game-options">
+                    <button class="game-option">Aquella noche bajo las estrellas</button>
+                    <button class="game-option">Nuestro viaje juntos</button>
+                    <button class="game-option">El día que nos dijimos "te amo"</button>
+                </div>
+            </div>
+
+            <button class="btn btn--secondary" id="momentsNextBtn">
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- ✨ SECCIÓN 4: NUESTRAS FRASES -->
+        <section class="section section--quotes" id="section-quotes">
+            <h1 class="section__title">Nuestras Frases</h1>
+
+            <!-- 📜 LISTA DE FRASES -->
+            <div class="quotes-list" id="quotesList">
+                <!-- Se genera dinámicamente -->
+            </div>
+
+            <!-- 🎮 JUEGO: COMPLETAR FRASE -->
+            <div class="complete-quote" id="completeQuoteGame">
+                <!-- ⚙️ EDITAR: Cambiar frase para completar -->
+                <div class="complete-quote__text">
+                    Lo que más amo de ti es tu
+                    <span class="complete-quote__blank">________</span>
+                </div>
+                <div class="complete-options">
+                    <!-- ⚙️ EDITAR: Primera opción = respuesta correcta -->
+                    <button class="complete-option" data-correct="true">Forma de amar</button>
+                    <button class="complete-option" data-correct="false">Sentido del humor</button>
+                    <button class="complete-option" data-correct="false">Belleza física</button>
+                </div>
+            </div>
+
+            <button class="btn btn--secondary" id="quotesNextBtn">
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- 💕 SECCIÓN 5: LO QUE SIENTO POR TI -->
+        <section class="section section--love" id="section-love">
+            <div class="love-letter">
+                <h1 class="love-letter__title">Para Ti</h1>
+               
+                <!-- ⚙️ EDITAR: Cambiar esta carta de amor -->
+                <div class="love-letter__content">
+                    <p>Te quiero más de lo que las palabras pueden expresar. Cada día despierto pensando en ti, en tu sonrisa, en tu risa contagiosa, en esa forma especial que tienes de hacer que todo sea mejor.</p>
+                    
+                    <p>Aunque la distancia nos separa, nada puede con los sentimientos que albergo por ti. Eres mi razón, mi inspiración, mi luz en los días oscuros.</p>
+                    
+                    <p>Prometo que seguiremos construyendo esta hermosa historia juntos. Eres y serás siempre lo más importante para mí.</p>
+                </div>
+
+                <div class="love-letter__closing">
+                    Con todo mi amor,<br>
+                    Tu amor a distancia 💕
+                </div>
+            </div>
+
+            <button class="btn btn--secondary" id="loveNextBtn" style="margin-top: 3rem; color: white; border: 2px solid white; background: transparent;">
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- 🎁 SECCIÓN 6: TU REGALO -->
+        <section class="section section--gift" id="section-gift">
+            <div class="gift__box" id="giftBox">🎁</div>
+            
+            <div class="gift__message">
+                <h1 class="gift__title">¡Tu Sorpresa!</h1>
+                
+                <!-- ⚙️ EDITAR: Cambiar mensaje del regalo -->
+                <p class="gift__text">
+                    He preparado este regalo con todo mi amor para ti. No es algo material, sino algo que nace del corazón. Cada sección, cada juego, cada palabra está hecha pensando en ti y en los momentos hermosos que hemos compartido.
+                </p>
+
+                <p class="gift__final">
+                    ✨ Ahora sí... Abre tu regalo real ✨
+                </p>
+            </div>
+
+            <button class="btn btn--secondary" id="openGiftBtn" style="margin-top: 3rem; color: white; border: 2px solid white; background: transparent;">
+                🎉 ¡ABRIRLO! 🎉
+            </button>
+        </section>
+    </div>
+
+    <!-- 📜 SCRIPT PRINCIPAL -->
+    <script>
+        /* ════════════════════════════════════════════════════
+           🎬 CONFIGURACIÓN GLOBAL
+           ════════════════════════════════════════════════════ */
+        
+        const CONFIG = {
+            // ⚙️ EDITAR: Respuesta correcta del quiz (0, 1 o 2)
+            STORY_QUIZ_CORRECT: 1,
+            // ⚙️ EDITAR: URL de música
+            MUSIC_URL: 'tu-cancion.mp3',
+            // Frases para mostrar
+            QUOTES: [
+                { text: "Te amo no por quién eres, sino por quién soy cuando estoy contigo.", author: "Nuestro amor" },
+                { text: "La distancia no es nada cuando la otra persona lo significa todo.", author: "Nuestro amor" },
+                { text: "Cada día contigo es una bendición que no pido que se repita.", author: "Nuestro amor" },
+                { text: "Eres el primero en el que pienso cuando despierto y el último antes de dormir.", author: "Nuestro amor" }
+            ]
+        };
+
+        /* ════════════════════════════════════════════════════
+           📱 MANEJO DE MÚSICA
+           ════════════════════════════════════════════════════ */
+        class MusicManager {
+            constructor(url) {
+                this.audio = new Audio(url);
+                this.audio.loop = true;
+                this.btn = document.getElementById('musicBtn');
+                this.btn.addEventListener('click', () => this.toggle());
+            }
+
+            toggle() {
+                if (this.audio.paused) {
+                    this.play();
+                } else {
+                    this.pause();
+                }
+            }
+
+            play() {
+                this.audio.play().catch(err => console.warn('No se pudo reproducir música:', err));
+                this.btn.textContent = '🎵 Pausar música';
+                this.btn.classList.add('music-btn--playing');
+            }
+
+            pause() {
+                this.audio.pause();
+                this.btn.textContent = '🎵 Reproducir música';
+                this.btn.classList.remove('music-btn--playing');
+            }
+        }
+
+        /* ════════════════════════════════════════════════════
+           ❓ MANEJO DE QUIZ
+           ════════════════════════════════════════════════════ */
+        class QuizManager {
+            constructor() {
+                this.initializeQuizzes();
+            }
+
+            initializeQuizzes() {
+                // Quiz de sección 2 (story)
+                const storyQuiz = document.querySelector('[data-quiz="story"]');
+                if (storyQuiz) {
+                    const options = storyQuiz.querySelectorAll('.quiz__option');
+                    options.forEach(option => {
+                        option.addEventListener('click', () => this.handleQuizAnswer(storyQuiz, option, CONFIG.STORY_QUIZ_CORRECT));
+                    });
+                }
+            }
+
+            handleQuizAnswer(quizElement, selectedOption, correctIndex) {
+                const options = quizElement.querySelectorAll('.quiz__option');
+                const selectedIndex = parseInt(selectedOption.dataset.index);
+                const feedback = quizElement.querySelector('.quiz__feedback');
+                const isCorrect = selectedIndex === correctIndex;
+
+                // Deshabilitar todas las opciones
+                options.forEach(opt => opt.disabled = true);
+
+                if (isCorrect) {
+                    selectedOption.classList.add('quiz__option--correct');
+                    feedback.textContent = '✅ ¡Correcto! Así fue...';
+                    feedback.classList.add('quiz__feedback--correct');
+                    document.getElementById('storyNextBtn').disabled = false;
+                } else {
+                    selectedOption.classList.add('quiz__option--incorrect');
+                    feedback.textContent = '❌ Mmm, no fue así. Intenta de nuevo.';
+                    feedback.classList.add('quiz__feedback--incorrect');
+
+                    setTimeout(() => {
+                        selectedOption.classList.remove('quiz__option--incorrect');
+                        options.forEach(opt => opt.disabled = false);
+                    }, 1500);
+                }
+            }
+        }
+
+        /* ════════════════════════════════════════════════════
+           🎮 MANEJO DE JUEGOS
+           ════════════════════════════════════════════════════ */
+        class GameManager {
+            constructor() {
+                this.initializeMomentsGame();
+                this.initializeCompleteQuoteGame();
+            }
+
+            initializeMomentsGame() {
+                const options = document.querySelectorAll('[data-quiz="moments"] .game-option');
+                options.forEach(option => {
+                    option.addEventListener('click', () => this.selectGameOption(option));
+                });
+            }
+
+            selectGameOption(button) {
+                const container = button.closest('.quiz');
+                const allOptions = container.querySelectorAll('.game-option');
+
+                allOptions.forEach(opt => {
+                    opt.disabled = true;
+                    opt.style.opacity = '0.5';
+                });
+
+                button.classList.add('game-option--selected');
+                button.style.opacity = '1';
+            }
+
+            initializeCompleteQuoteGame() {
+                const options = document.querySelectorAll('#completeQuoteGame .complete-option');
+                options.forEach(option => {
+                    option.addEventListener('click', () => this.handleCompleteQuote(option));
+                });
+            }
+
+            handleCompleteQuote(button) {
+                const container = button.closest('#completeQuoteGame');
+                const allOptions = container.querySelectorAll('.complete-option');
+
+                allOptions.forEach(opt => {
+                    opt.disabled = true;
+                    opt.style.opacity = '0.5';
+                });
+
+                button.style.opacity = '1';
+
+                if (button.dataset.correct === 'true') {
+                    button.classList.add('complete-option--correct');
+                    button.textContent = '✓ ' + button.textContent;
+                }
+            }
+        }
+
+        /* ════════════════════════════════════════════════════
+           🎊 EFECTOS VISUALES
+           ════════════════════════════════════════════════════ */
+        class EffectsManager {
+            static createConfetti(count = 50) {
+                const colors = ['#ff6b9d', '#ffd700', '#ff85b3', '#ffb3d9'];
+
+                for (let i = 0; i < count; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    confetti.style.animationDuration = (Math.random() * 1.5 + 2.5) + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 4000);
+                }
+            }
+
+            static createHearts(count = 30) {
+                const hearts = ['❤️', '💕', '💖', '💗', '💝'];
+
+                for (let i = 0; i < count; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-particle';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.bottom = '-50px';
+                    heart.style.animationDelay = (Math.random() * 0.3) + 's';
+                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 5000);
+                }
+            }
+
+            static openGift() {
+                const giftBox = document.getElementById('giftBox');
+                giftBox.style.animation = 'none';
+
+                setTimeout(() => {
+                    giftBox.style.transform = 'scale(0)';
+                    giftBox.style.opacity = '0';
+                    giftBox.style.transition = 'all 0.5s ease';
+                }, 100);
+
+                EffectsManager.createConfetti(50);
+                EffectsManager.createHearts(30);
+            }
+        }
+
+        /* ════════════════════════════════════════════════════
+           📄 MANEJO DE FRASES
+           ════════════════════════════════════════════════════ */
+        function initializeQuotes() {
+            const quotesList = document.getElementById('quotesList');
+            CONFIG.QUOTES.forEach(quote => {
+                const card = document.createElement('div');
+                card.className = 'quote-card';
+                card.innerHTML = `
+                    <div class="quote-card__text">"${quote.text}"</div>
+                    <div class="quote-card__author">— ${quote.author}</div>
+                `;
+                quotesList.appendChild(card);
+            });
+        }
+
+        /* ════════════════════════════════════════════════════
+           📊 MANEJO DE PROGRESO
+           ════════════════════════════════════════════════════ */
+        class ProgressManager {
+            constructor() {
+                this.sections = document.querySelectorAll('.section');
+                this.progressBar = document.getElementById('progressBar');
+                this.currentIndex = 0;
+                this.updateProgress();
+            }
+
+            updateProgress() {
+                const progress = ((this.currentIndex + 1) / this.sections.length) * 100;
+                this.progressBar.style.width = progress + '%';
+            }
+
+            scrollToSection(index) {
+                if (index >= 0 && index < this.sections.length) {
+                    this.currentIndex = index;
+                    this.sections[index].scrollIntoView({ behavior: 'smooth' });
+                    this.updateProgress();
+                }
+            }
+
+            getNextIndex() {
+                return Math.min(this.currentIndex + 1, this.sections.length - 1);
+            }
+        }
+
+        /* ════════════════════════════════════════════════════
+           🎯 INICIALIZACIÓN
+           ════════════════════════════════════════════════════ */
+        const progressMgr = new ProgressManager();
+        const musicMgr = new MusicManager(CONFIG.MUSIC_URL);
+        const quizMgr = new QuizManager();
+        const gameMgr = new GameManager();
+
+        // Esconder pantalla de carga
+        setTimeout(() => {
+            document.getElementById('appLoader').style.display = 'none';
+        }, 2700);
+
+        // Inicializar frases
+        initializeQuotes();
+
+        // Eventos de navegación
+        document.getElementById('heroStartBtn').addEventListener('click', () => {
+            progressMgr.scrollToSection(1);
+        });
+
+        document.getElementById('storyNextBtn').addEventListener('click', () => {
+            progressMgr.scrollToSection(2);
+        });
+
+        document.getElementById('momentsNextBtn').addEventListener('click', () => {
+            progressMgr.scrollToSection(3);
+        });
+
+        document.getElementById('quotesNextBtn').addEventListener('click', () => {
+            progressMgr.scrollToSection(4);
+        });
+
+        document.getElementById('loveNextBtn').addEventListener('click', () => {
+            progressMgr.scrollToSection(5);
+        });
+
+        document.getElementById('openGiftBtn').addEventListener('click', () => {
+            EffectsManager.openGift();
+        });
+
+        // Soporte para teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown') {
+                progressMgr.scrollToSection(progressMgr.getNextIndex());
+            }
+        });
+    </script>
+</body>
+</html>
