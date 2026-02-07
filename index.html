@@ -424,12 +424,26 @@
             border-color: var(--color-success);
             background: #d5f4e6;
             color: var(--color-success);
+            animation: option__pulse var(--transition-smooth) ease-out;
         }
 
         .quiz__option--incorrect {
             border-color: var(--color-error);
             background: #fadbd8;
             color: var(--color-error);
+            animation: option__shake 0.3s ease-in-out;
+        }
+
+        @keyframes option__pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes option__shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .quiz__option:disabled {
@@ -443,14 +457,27 @@
             font-size: 1.05rem;
             min-height: 1.5rem;
             transition: all var(--transition-fast);
+            display: none;
+            animation: feedback__slideIn var(--transition-fast) ease-out;
+        }
+
+        @keyframes feedback__slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .quiz__feedback--correct {
             color: var(--color-success);
+            background: rgba(39, 174, 96, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: 0.5rem;
         }
 
         .quiz__feedback--incorrect {
             color: var(--color-error);
+            background: rgba(231, 76, 60, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: 0.5rem;
         }
 
         /* ────────────────────────────────────────────────────
@@ -495,6 +522,7 @@
         .game-option--selected {
             background: rgba(255, 107, 157, 0.2);
             border-color: var(--color-primary);
+            animation: option__pulse var(--transition-smooth) ease-out;
         }
 
         .game-option:disabled {
@@ -600,6 +628,7 @@
             background: #d5f4e6;
             border-color: var(--color-success);
             color: var(--color-success);
+            animation: option__pulse var(--transition-smooth) ease-out;
         }
 
         .complete-option:disabled {
@@ -934,6 +963,7 @@
                     <button class="game-option">Nuestro viaje juntos</button>
                     <button class="game-option">El día que nos dijimos "te amo"</button>
                 </div>
+                <div class="quiz__feedback"></div>
             </div>
 
             <button class="btn btn--secondary" id="momentsNextBtn">
@@ -1095,23 +1125,34 @@
                 const feedback = quizElement.querySelector('.quiz__feedback');
                 const isCorrect = selectedIndex === correctIndex;
 
-                // Deshabilitar todas las opciones
-                options.forEach(opt => opt.disabled = true);
+                // Deshabilitar todas las opciones inmediatamente
+                options.forEach(opt => {
+                    opt.disabled = true;
+                    opt.style.pointerEvents = 'none';
+                });
 
                 if (isCorrect) {
                     selectedOption.classList.add('quiz__option--correct');
-                    feedback.textContent = '✅ ¡Correcto! Así fue...';
+                    feedback.innerHTML = '✅ ¡Correcto! Así fue...';
+                    feedback.classList.remove('quiz__feedback--incorrect');
                     feedback.classList.add('quiz__feedback--correct');
+                    feedback.style.display = 'block';
                     document.getElementById('storyNextBtn').disabled = false;
                 } else {
                     selectedOption.classList.add('quiz__option--incorrect');
-                    feedback.textContent = '❌ Mmm, no fue así. Intenta de nuevo.';
+                    feedback.innerHTML = '❌ Mmm, no fue así. Intenta de nuevo.';
+                    feedback.classList.remove('quiz__feedback--correct');
                     feedback.classList.add('quiz__feedback--incorrect');
+                    feedback.style.display = 'block';
 
                     setTimeout(() => {
                         selectedOption.classList.remove('quiz__option--incorrect');
-                        options.forEach(opt => opt.disabled = false);
-                    }, 1500);
+                        options.forEach(opt => {
+                            opt.disabled = false;
+                            opt.style.pointerEvents = 'auto';
+                        });
+                        feedback.style.display = 'none';
+                    }, 2000);
                 }
             }
         }
@@ -1135,14 +1176,22 @@
             selectGameOption(button) {
                 const container = button.closest('.quiz');
                 const allOptions = container.querySelectorAll('.game-option');
+                const feedback = container.querySelector('.quiz__feedback');
 
                 allOptions.forEach(opt => {
                     opt.disabled = true;
-                    opt.style.opacity = '0.5';
+                    opt.style.pointerEvents = 'none';
                 });
 
                 button.classList.add('game-option--selected');
                 button.style.opacity = '1';
+
+                if (feedback) {
+                    feedback.innerHTML = '✅ ¡Bien! Ese es uno de nuestros momentos especiales.';
+                    feedback.classList.remove('quiz__feedback--incorrect');
+                    feedback.classList.add('quiz__feedback--correct');
+                    feedback.style.display = 'block';
+                }
             }
 
             initializeCompleteQuoteGame() {
@@ -1158,14 +1207,23 @@
 
                 allOptions.forEach(opt => {
                     opt.disabled = true;
-                    opt.style.opacity = '0.5';
+                    opt.style.pointerEvents = 'none';
                 });
 
                 button.style.opacity = '1';
 
                 if (button.dataset.correct === 'true') {
                     button.classList.add('complete-option--correct');
-                    button.textContent = '✓ ' + button.textContent;
+                    const originalText = button.textContent;
+                    if (!originalText.includes('✓')) {
+                        button.textContent = '✓ ' + originalText;
+                    }
+                } else {
+                    button.classList.add('complete-option--correct');
+                    const originalText = button.textContent;
+                    if (!originalText.includes('✓')) {
+                        button.textContent = '✓ ' + originalText;
+                    }
                 }
             }
         }
