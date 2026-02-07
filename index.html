@@ -958,15 +958,18 @@
             <div class="quiz" data-quiz="moments">
                 <!-- ⚙️ EDITAR: Cambiar pregunta y opciones -->
                 <div class="quiz__question">¿Cuál fue nuestro momento favorito?</div>
-                <div class="game-options">
-                    <button class="game-option">Aquella noche bajo las estrellas</button>
-                    <button class="game-option">Nuestro viaje juntos</button>
-                    <button class="game-option">El día que nos dijimos "te amo"</button>
+                <div class="quiz__options">
+                    <!-- ⚙️ EDITAR: Cambiar opciones (el índice de la primera opción correcta es 0, segunda es 1, tercera es 2) -->
+                    <button class="quiz__option" data-index="0">Aquella noche bajo las estrellas</button>
+                    <button class="quiz__option" data-index="1">Nuestro viaje juntos</button>
+                    <button class="quiz__option" data-index="2">El día que nos dijimos "te amo"</button>
                 </div>
                 <div class="quiz__feedback"></div>
             </div>
+            <!-- ⚙️ EDITAR: Cambiar índice de respuesta correcta (0, 1 o 2) -->
+            <input type="hidden" id="moments-quiz-correct" value="2">
 
-            <button class="btn btn--secondary" id="momentsNextBtn">
+            <button class="btn btn--secondary" id="momentsNextBtn" disabled>
                 Siguiente →
             </button>
         </section>
@@ -981,21 +984,21 @@
             </div>
 
             <!-- 🎮 JUEGO: COMPLETAR FRASE -->
-            <div class="complete-quote" id="completeQuoteGame">
+            <div class="quiz" data-quiz="quotes">
                 <!-- ⚙️ EDITAR: Cambiar frase para completar -->
-                <div class="complete-quote__text">
-                    Lo que más amo de ti es tu
-                    <span class="complete-quote__blank">________</span>
+                <div class="quiz__question">Lo que más amo de ti es tu ________</div>
+                <div class="quiz__options">
+                    <!-- ⚙️ EDITAR: Cambiar opciones (el índice de la primera opción correcta es 0, segunda es 1, tercera es 2) -->
+                    <button class="quiz__option" data-index="0">Forma de amar</button>
+                    <button class="quiz__option" data-index="1">Sentido del humor</button>
+                    <button class="quiz__option" data-index="2">Belleza física</button>
                 </div>
-                <div class="complete-options">
-                    <!-- ⚙️ EDITAR: Primera opción = respuesta correcta -->
-                    <button class="complete-option" data-correct="true">Forma de amar</button>
-                    <button class="complete-option" data-correct="false">Sentido del humor</button>
-                    <button class="complete-option" data-correct="false">Belleza física</button>
-                </div>
+                <div class="quiz__feedback"></div>
             </div>
+            <!-- ⚙️ EDITAR: Cambiar índice de respuesta correcta (0, 1 o 2) -->
+            <input type="hidden" id="quotes-quiz-correct" value="0">
 
-            <button class="btn btn--secondary" id="quotesNextBtn">
+            <button class="btn btn--secondary" id="quotesNextBtn" disabled>
                 Siguiente →
             </button>
         </section>
@@ -1109,17 +1112,23 @@
             }
 
             initializeQuizzes() {
-                // Quiz de sección 2 (story)
-                const storyQuiz = document.querySelector('[data-quiz="story"]');
-                if (storyQuiz) {
-                    const options = storyQuiz.querySelectorAll('.quiz__option');
-                    options.forEach(option => {
-                        option.addEventListener('click', () => this.handleQuizAnswer(storyQuiz, option, CONFIG.STORY_QUIZ_CORRECT));
-                    });
-                }
+                // Inicializar todos los quizzes
+                const quizzes = document.querySelectorAll('[data-quiz]');
+                quizzes.forEach(quiz => {
+                    const quizType = quiz.dataset.quiz;
+                    const correctValue = document.getElementById(`${quizType}-quiz-correct`);
+                    
+                    if (correctValue) {
+                        const correctIndex = parseInt(correctValue.value);
+                        const options = quiz.querySelectorAll('.quiz__option');
+                        options.forEach(option => {
+                            option.addEventListener('click', () => this.handleQuizAnswer(quiz, option, correctIndex, quizType));
+                        });
+                    }
+                });
             }
 
-            handleQuizAnswer(quizElement, selectedOption, correctIndex) {
+            handleQuizAnswer(quizElement, selectedOption, correctIndex, quizType) {
                 const options = quizElement.querySelectorAll('.quiz__option');
                 const selectedIndex = parseInt(selectedOption.dataset.index);
                 const feedback = quizElement.querySelector('.quiz__feedback');
@@ -1137,7 +1146,13 @@
                     feedback.classList.remove('quiz__feedback--incorrect');
                     feedback.classList.add('quiz__feedback--correct');
                     feedback.style.display = 'block';
-                    document.getElementById('storyNextBtn').disabled = false;
+                    
+                    // Desbloquear botón siguiente según el tipo de quiz
+                    const nextBtnId = `${quizType}NextBtn`;
+                    const nextBtn = document.getElementById(nextBtnId);
+                    if (nextBtn) {
+                        nextBtn.disabled = false;
+                    }
                 } else {
                     selectedOption.classList.add('quiz__option--incorrect');
                     feedback.innerHTML = '❌ Mmm, no fue así. Intenta de nuevo.';
@@ -1158,78 +1173,7 @@
         }
 
         /* ════════════════════════════════════════════════════
-           🎮 MANEJO DE JUEGOS
-           ════════════════════════════════════════════════════ */
-        class GameManager {
-            constructor() {
-                this.initializeMomentsGame();
-                this.initializeCompleteQuoteGame();
-            }
-
-            initializeMomentsGame() {
-                const options = document.querySelectorAll('[data-quiz="moments"] .game-option');
-                options.forEach(option => {
-                    option.addEventListener('click', () => this.selectGameOption(option));
-                });
-            }
-
-            selectGameOption(button) {
-                const container = button.closest('.quiz');
-                const allOptions = container.querySelectorAll('.game-option');
-                const feedback = container.querySelector('.quiz__feedback');
-
-                allOptions.forEach(opt => {
-                    opt.disabled = true;
-                    opt.style.pointerEvents = 'none';
-                });
-
-                button.classList.add('game-option--selected');
-                button.style.opacity = '1';
-
-                if (feedback) {
-                    feedback.innerHTML = '✅ ¡Bien! Ese es uno de nuestros momentos especiales.';
-                    feedback.classList.remove('quiz__feedback--incorrect');
-                    feedback.classList.add('quiz__feedback--correct');
-                    feedback.style.display = 'block';
-                }
-            }
-
-            initializeCompleteQuoteGame() {
-                const options = document.querySelectorAll('#completeQuoteGame .complete-option');
-                options.forEach(option => {
-                    option.addEventListener('click', () => this.handleCompleteQuote(option));
-                });
-            }
-
-            handleCompleteQuote(button) {
-                const container = button.closest('#completeQuoteGame');
-                const allOptions = container.querySelectorAll('.complete-option');
-
-                allOptions.forEach(opt => {
-                    opt.disabled = true;
-                    opt.style.pointerEvents = 'none';
-                });
-
-                button.style.opacity = '1';
-
-                if (button.dataset.correct === 'true') {
-                    button.classList.add('complete-option--correct');
-                    const originalText = button.textContent;
-                    if (!originalText.includes('✓')) {
-                        button.textContent = '✓ ' + originalText;
-                    }
-                } else {
-                    button.classList.add('complete-option--correct');
-                    const originalText = button.textContent;
-                    if (!originalText.includes('✓')) {
-                        button.textContent = '✓ ' + originalText;
-                    }
-                }
-            }
-        }
-
-        /* ════════════════════════════════════════════════════
-           🎊 EFECTOS VISUALES
+            EFECTOS VISUALES
            ════════════════════════════════════════════════════ */
         class EffectsManager {
             static createConfetti(count = 50) {
@@ -1331,7 +1275,6 @@
         const progressMgr = new ProgressManager();
         const musicMgr = new MusicManager(CONFIG.MUSIC_URL);
         const quizMgr = new QuizManager();
-        const gameMgr = new GameManager();
 
         // Esconder pantalla de carga
         setTimeout(() => {
