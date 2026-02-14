@@ -705,18 +705,7 @@ body {
 }
 
 .memory-card-front .play-icon {
-    position: absolute;
-    font-size: 3.5rem;
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity var(--transition-smooth);
+    display: none;
 }
 
 .memory-card-front:hover .play-icon {
