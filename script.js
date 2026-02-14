@@ -260,6 +260,21 @@ document.getElementById('openGiftBtn').addEventListener('click', () => {
     EffectsManager.openGift();
 });
 
+// Manejo de tarjetas de recuerdos - reproducir video automáticamente
+function handleCardClick(card) {
+    card.classList.toggle('flipped');
+    
+    // Si se voltea hacia el frente (video), reproducir después de la animación
+    if (card.classList.contains('flipped')) {
+        setTimeout(() => {
+            const video = card.querySelector('video');
+            if (video) {
+                video.play().catch(err => console.warn('No se pudo reproducir video:', err));
+            }
+        }, 600); // Esperar a que termine la rotación
+    }
+}
+
 // Soporte para teclado
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown') {
