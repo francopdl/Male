@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+<!-- 🎨 HEAD - Meta tags y estilos CSS                                           -->
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b9d">
+    <title>Nuestro Viaje - San Valentín 💕</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+<!-- 📄 BODY - HTML y contenido de la página                                      -->
+<!-- ════════════════════════════════════════════════════════════════════════════ -->
+
+<body>
+    <!-- ⏳ PANTALLA DE CARGA -->
+    <div class="app__loader" id="appLoader">
+        <div class="app__loader-content">
+            <div class="app__loader-icon">❤️</div>
+            <p class="app__loader-text">Cargando nuestro viaje...</p>
+        </div>
+    </div>
+
+    <!-- 📊 BARRA DE PROGRESO -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- 🎯 APLICACIÓN PRINCIPAL -->
+    <div class="app" id="app">
+        <!-- 🏠 SECCIÓN 1: PANTALLA INICIAL/HERO -->
+        <section class="section hero" id="section-hero">
+            <div class="hero__content">
+                <h1 class="hero__title">💕 Nuestro Viaje 💕</h1>
+
+                <!-- ⚙️ EDITAR: Cambiar subtítulo -->
+                <h2 class="hero__subtitle">Un viaje por nuestros recuerdos</h2>
+
+                <div class="hero__controls">
+                    <!-- ⚙️ EDITAR: Cambiar URL de música (reemplazar 'tu-cancion.mp3') -->
+                    <button class="music-btn" id="musicBtn" data-audio="Amarte Es Un Placer">
+                        🎵 Reproducir música
+                    </button>
+                    <button class="btn btn--primary" id="heroStartBtn">
+                        ✨ Empezar el viaje ✨
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 💌 SECCIÓN 2: CÓMO EMPEZÓ TODO -->
+        <section class="section section--story" id="section-story">
+            <h1 class="section__title">Cómo Empezó Todo</h1>
+
+            <!-- 🖼️ GALERÍA: 2 imágenes -->
+            <div class="gallery gallery--2col" id="storyGallery">
+                <!-- ⚙️ EDITAR: Cambiar URLs de imágenes -->
+                <div class="gallery__item">
+                    <img src="multimedia/Male16.jpg" alt="Primer momento" loading="lazy">
+                </div>
+                <div class="gallery__item">
+                    <img src="multimedia/YO16.jpg" alt="Segundo momento" loading="lazy">
+                </div>
+            </div>
+
+            <!-- ⚙️ EDITAR: Cambiar texto de la historia -->
+            <div class="text-block text-block__primary">
+                Si bien vos sos amor la que mas se acuerda de ese primer día, recuerdo el momento en que me senté y te
+                pregunté tu nombre, recuerdo tambien cuando nos conocimos mejor en Febrero y lo hermoso que se sentia
+                compartir con vos (por eso te hablé despues por IG jejeje). Desde ese momento empezamos a ser la Male y
+                Franco inseparables. Queria que sepas que esos recuerdos cuando eramos "amigos" (porque vos gustabas de
+                mi) son momentos que guardo y atesoro mucho. Aqui te dejo algo de lo que pude encontrar. Te amo.
+
+                <!-- ❓ QUIZ INTERACTIVO -->
+                <div class="quiz" data-quiz="story">
+                    <!-- ⚙️ EDITAR: Cambiar pregunta -->
+                    <div class="quiz__question">¿A donde fue nuestra primera cita?</div>
+                    <div class="quiz__options">
+                        <!-- ⚙️ EDITAR: Cambiar opciones (el índice de la primera opción correcta es 0, segunda es 1, tercera es 2) -->
+                        <button class="quiz__option" data-index="0">Loma Bola</button>
+                        <button class="quiz__option" data-index="1">Mi casa</button>
+                        <button class="quiz__option" data-index="2">El Portal</button>
+                    </div>
+                    <div class="quiz__feedback"></div>
+                </div>
+                <!-- ⚙️ EDITAR: Cambiar índice de respuesta correcta (el quiz usa data-correct) -->
+                <input type="hidden" id="story-quiz-correct" value="2">
+
+                <button class="btn btn--secondary" id="storyNextBtn" disabled>
+                    Siguiente →
+                </button>
+        </section>
+
+        <!-- 🌟 SECCIÓN 3: NUESTROS MOMENTOS -->
+        <section class="section section--moments" id="section-moments">
+            <h1 class="section__title">Nuestros Momentos</h1>
+
+            <!-- 🖼️ GALERÍA: 4 imágenes -->
+            <div class="gallery gallery--4col" id="momentsGallery">
+                <!-- ⚙️ EDITAR: Cambiar URLs de imágenes -->
+                <div class="gallery__item">
+                    <img src="multimedia/Buenosairespuentedelamujer.jpg" alt="Buenos Aires - Puente de la Mujer" loading="lazy">
+                    <div class="gallery__title">Buenos Aires</div>
+                </div>
+                <div class="gallery__item">
+                    <img src="multimedia/Mundial.jpg" alt="Mundial 2022" loading="lazy">
+                    <div class="gallery__title">Mundial 2022</div>
+                </div>
+                <div class="gallery__item">
+                    <img src="multimedia/NomalUltimo2.jpg" alt="Ultimo dia que nos vimos" loading="lazy">
+                    <div class="gallery__title">Ultimo dia que nos vimos</div>
+                </div>
+                <div class="gallery__item">
+                    <img src="multimedia/Retrato-Amarte.jpg" alt="Retrato Amarte es un placer" loading="lazy">
+                    <div class="gallery__title">Retrato Amarte es un placer</div>
+                </div>
+
+                  <div class="gallery__item">
+                    <img src="multimedia/Aeropuerto.jpg" alt="En el aeropuerto, pronto viajaremos juntos" loading="lazy">
+                    <div class="gallery__title">Aeropuerto, pronto viajaremos junto</div>
+                </div>
+                  <div class="gallery__item">
+                    <img src="multimedia/AñoNuevo.jpg" alt="Año Nuevo" loading="lazy">
+                    <div class="gallery__title">Año Nuevo</div>
+                </div>
+                  <div class="gallery__item">
+                    <img src="multimedia/FotoSosteniedoMale.jpg" alt="Me encanta esta" loading="lazy">
+                    <div class="gallery__title">Me encanta esta</div>
+                </div>
+                  <div class="gallery__item">
+                    <img src="multimedia/Hamburguesa.jpg" alt="La Tasty" loading="lazy">
+                    <div class="gallery__title">La Tasty</div>
+                </div>
+                 <div class="gallery__item">
+                    <img src="multimedia/Tigre.jpeg" alt="Tigre" loading="lazy">
+                    <div class="gallery__title">El Tigre (nos ayudo mucho)</div>
+                </div>
+                 <div class="gallery__item">
+                    <img src="multimedia/AfueraCasaMale.jpg" alt="Afuera de casa" loading="lazy">
+                    <div class="gallery__title">Estos dias asi eran los mas felices</div>
+                </div>
+
+            </div>
+
+            <!-- ⚙️ EDITAR: Cambiar descripción -->
+            <div class="text-block text-block__primary">
+                Todos estos momentos que estamos recordando quedaran guardados tanto en mi corazón como aqui para
+                siempre. Cada vez que sientas que necesitas un lugar seguro es aqui (de momento es lo que puedo darte
+                por la distancia), pero este espacio es tuyo amor aqui se guardan nuestos momentos, de nadie mas, son
+                solo tuyos y mios. Este lugar vivira para simepre y por siempre. Espero que disfrutes de este 14 de
+                Febrero. Ahora podes decir que tenes una pagina Web jeje.
+            </div>
+
+            <!-- 🎮 JUEGO: ADIVINA EL MOMENTO -->
+            <div class="quiz" data-quiz="moments">
+                <!-- ⚙️ EDITAR: Cambiar pregunta y opciones -->
+                <div class="quiz__question">¿Que dia te di el primer beso?</div>
+                <div class="quiz__options">
+                    <!-- ⚙️ EDITAR: Cambiar opciones (el índice de la primera opción correcta es 0, segunda es 1, tercera es 2) -->
+                    <button class="quiz__option" data-index="0">30 de Octubre</button>
+                    <button class="quiz__option" data-index="1">16 de Octubre</button>
+                    <button class="quiz__option" data-index="2">24 de Octubre</button>
+                </div>
+                <div class="quiz__feedback"></div>
+            </div>
+            <!-- ⚙️ EDITAR: Cambiar índice de respuesta correcta (0, 1 o 2) -->
+            <input type="hidden" id="moments-quiz-correct" value="1">
+
+            <button class="btn btn--secondary" id="momentsNextBtn" disabled>
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- ✨ SECCIÓN 4: NUESTRAS FRASES -->
+        <section class="section section--quotes" id="section-quotes">
+            <h1 class="section__title">Nuestras Frases</h1>
+
+            <!-- 📜 LISTA DE FRASES -->
+            <div class="quotes-list" id="quotesList">
+                <!-- Se genera dinámicamente -->
+            </div>
+
+            <!-- 🎮 JUEGO: COMPLETAR FRASE -->
+            <div class="quiz" data-quiz="quotes">
+                <!-- ⚙️ EDITAR: Cambiar frase para completar -->
+                <div class="quiz__question">Lo que más amo de ti es tu ________</div>
+                <div class="quiz__options">
+                    <!-- ⚙️ EDITAR: Cambiar opciones (el índice de la primera opción correcta es 0, segunda es 1, tercera es 2) -->
+                    <button class="quiz__option" data-index="0">Sonrisa</button>
+                    <button class="quiz__option" data-index="1">Sentido del humor</button>
+                    <button class="quiz__option" data-index="2">Personalidad</button>
+                    <button class="quiz__option" data-index="3">Inteligencia</button>
+                    <button class="quiz__option" data-index="4">Culo</button>
+                    <button class="quiz__option" data-index="5">Tetas</button>
+                    <button class="quiz__option" data-index="6">5 y 6</button>
+                    <button class="quiz__option" data-index="7">Todas son correctas</button>
+                </div>
+                <div class="quiz__feedback"></div>
+            </div>
+            <!-- ⚙️ EDITAR: Cambiar índice de respuesta correcta (0, 1 o 2) -->
+
+            <input type="hidden" id="quotes-quiz-correct" value="6,7">
+
+            <button class="btn btn--secondary" id="quotesNextBtn" disabled>
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- 🎞️ SECCIÓN 5: RECUERDOS -->
+        <section class="section section--memories" id="section-memories">
+            <h1 class="section__title">Nuestros Recuerdos</h1>
+            <p class="section__subtitle">Haz clic en las cartas para voltearlas y ver nuestros momentos especiales</p>
+
+            <div class="memories-container">
+                <!-- 🎞️ EDITAR: Agregar/modificar recuerdos aquí -->
+
+                <!-- Recuerdo 1 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <video src="multimedia/ConciertoParalamaleyfranco.mov" muted autoplay loop></video>
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Nuestro Primer Viaje</div>
+                        <p class="memory-card-back-text">Fue lo mejor que me pudo haber pasado el compartir ese viaje con vos y como decimos es para la male y franco del futuro</p>
+                        <div class="memory-card-back-date">Agosto 2023</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 2 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <video src="multimedia/VID-20240804-WA0093.mp4" muted autoplay loop></video>
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Café Especial</div>
+                        <p class="memory-card-back-text">Esos cafés en nuestra esquina favorita, conversaciones
+                            infinitas solo tú y yo. Esos son los momentos que atesoro.</p>
+                        <div class="memory-card-back-date">Octubre 2023</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 3 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <video src="multimedia/eefd92833cf50be6c4ee5c7f241f3344.mp4" muted autoplay loop></video>
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Un videito mio</div>
+                        <p class="memory-card-back-text">Este video lo hice con mucho cariño hace un tiempo, me encanta porque destaca bien nuestros momentos solos</p>
+                        <div class="memory-card-back-date">Noviembre 2022</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 4 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <video src="multimedia/NuestroBanco.mp4" muted autoplay loop></video>
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Nuestro Banco</div>
+                        <p class="memory-card-back-text">Este es el lugar al cual ibamos cuando nos conocimos, este banco representa mucho, pasamos momentos tan graciosos y lindos</p>
+                        <div class="memory-card-back-date">Principios 2022</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 5 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <video src="multimedia/FiestaVideo.mp4" muted autoplay loop></video>
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">La summer</div>
+                        <p class="memory-card-back-text">Otro recuerdo de cuando empezamos siendos amigos pero aqui estamos mal, juntos y comenzando nuestras vidas juntos. De aqui en adelante proyectamos todos nuestros sueños juntos.</p>
+                        <div class="memory-card-back-date">Febrero 2022</div>
+                    </div>
+                </div>
+
+                <!-- Recuerdo 6 -->
+                <div class="memory-card" onclick="this.classList.toggle('flipped')">
+                    <div class="memory-card-face memory-card-front">
+                        <video src="multimedia/Fotoigtafi.mov" muted autoplay loop></video>
+                        <div class="play-icon">▶️</div>
+                    </div>
+                    <div class="memory-card-face memory-card-back">
+                        <div class="memory-card-back-title">Otra de Tafi</div>
+                        <p class="memory-card-back-text">Esta me encanta, sin mas nada que agregar. Nosotros siendo nostros en Tafi</p>
+                        <div class="memory-card-back-date">Enero 2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn--secondary" id="memoriesNextBtn">
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- 💕 SECCIÓN 6: LO QUE SIENTO POR TI -->
+        <section class="section section--love" id="section-love">
+            <div class="love-letter">
+                <h1 class="love-letter__title">Para Ti</h1>
+
+                <!-- ⚙️ EDITAR: Cambiar esta carta de amor -->
+                <div class="love-letter__content">
+                    <p>Que decirte Mal, sos, seras y fuiste el amor de mi vida, gracias a vos se lo que es amar y sentirse amado. Hay tantas cosas por las que te quiero agradecer, pero mas que eso hoy en este dia 14 de Febrero de 2026 quiero dejarte este regalo que perdurara para siempre, siempre podas tener este recuerdo nuestro
+                    </p>
+
+                    <p>
+                        Gracias por acompañarme en este proyecto, se que no es facil la distancia pero nosotros podemos mal, podemos con todo, somos lo que nos merecemos y que lo que quiero en mi vida. Peleare con todo y me esforzare al maximo para que nuestras vidas esten juntas por siempre.
+                    </p>
+
+                    <p>Con todo el amor del mundo 💕 con lo mucho que te extraño y te amo te hago esta carta. Sos la mejor persona que se pudo cruzar en mi camino estoy agradecido con la vida por permitirme estar con la mejor mujer del universo. Estaba pensado tambien cualidades tuyas como que sos inteligente, buena, hermosa, atenta, cordial, entre muchas cosas que podria decir pero realmete sos tan increible que si lo pienso bien al definirte te estoy limitando porque sos la perfeccion mal, no camibies nada tuyo porque asi como sos es lo mejor que tenes. </p>
+                    <p>. </p>
+                </div>
+
+                <div class="love-letter__closing">
+                    Esta carta se la escribe Frankeke para su Mariulala <br>
+                    Porque Amarte siempre es un placer 💕
+                </div>
+            </div>
+
+            <button class="btn btn--secondary" id="loveNextBtn"
+                style="margin-top: 3rem; color: white; border: 2px solid white; background: transparent;">
+                Siguiente →
+            </button>
+        </section>
+
+        <!-- 🎁 SECCIÓN 7: TU REGALO -->
+        <section class="section section--gift" id="section-gift">
+            <div class="gift__box" id="giftBox">🎁</div>
+
+            <div class="gift__message">
+                <h1 class="gift__title">¡Tu Sorpresa!</h1>
+
+                <!-- ⚙️ EDITAR: Cambiar mensaje del regalo -->
+                <p class="gift__text">
+                    He preparado este regalo con todo mi amor para vos. No es algo material, sino algo que nace del
+                    corazón. Cada sección, cada juego, cada palabra está hecha pensando en vos y en los momentos hermosos
+                    que hemos compartido.
+                </p>
+
+                <p class="gift__final">
+                    ✨ Ahora sí... Abre tu regalo real ✨
+                </p>
+            </div>
+
+            <button class="btn btn--secondary" id="openGiftBtn"
+                style="margin-top: 3rem; color: white; border: 2px solid white; background: transparent;">
+                🎉 ¡ABRIRLO! 🎉
+            </button>
+        </section>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════ -->
+    <!-- 📜 SCRIPT - JavaScript y lógica de la aplicación                            -->
+    <!-- ════════════════════════════════════════════════════════════════════════════ -->
+    <script src="script.js"></script>
+</body>
+
+</html>
