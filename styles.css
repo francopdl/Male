@@ -682,7 +682,6 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -691,10 +690,19 @@ body {
     background: white;
 }
 
+/* Front (video) - inicialmente oculto */
 .memory-card-front {
     background: white;
     overflow: hidden;
-    transform: rotateY(180deg);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.6s, opacity 0.6s;
+}
+
+/* Front visible cuando flipped */
+.memory-card.flipped .memory-card-front {
+    visibility: visible;
+    opacity: 1;
 }
 
 .memory-card-front img,
@@ -713,8 +721,8 @@ body {
     opacity: 1;
 }
 
+/* Back (texto) - inicialmente visible */
 .memory-card-back {
-    transform: rotateY(0deg);
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     color: white;
     padding: var(--spacing-lg);
@@ -723,6 +731,15 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    visibility: visible;
+    transition: visibility 0.6s, opacity 0.6s;
+    opacity: 1;
+}
+
+/* Back oculto cuando flipped */
+.memory-card.flipped .memory-card-back {
+    visibility: hidden;
+    opacity: 0;
 }
 
 .memory-card-back-title {
